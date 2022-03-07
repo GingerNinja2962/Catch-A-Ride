@@ -50,7 +50,7 @@ class _FloatingActionButtonModelState extends State<FloatingActionButtonModel> {
 
   void _onDoublePress() {
     (globals.destination != null)
-        ? {
+    ? {
       (doubleTapCount == 0)
       ? {
         globals.followUser = false,
@@ -85,7 +85,7 @@ class _FloatingActionButtonModelState extends State<FloatingActionButtonModel> {
     : null;
     (tapCount == 2)
     ? {
-      globals.followUser = false,
+      globals.followUser = true,
       cameraControllers.animateCameraToCurrentLocationTilted()
     } : null;
     (tapCount == 3)

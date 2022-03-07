@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:geolocator/geolocator.dart';
 
-
 Stream<Position> getPositionStream() {
   const LocationSettings locationSettings = LocationSettings(
     accuracy: LocationAccuracy.high,
-    distanceFilter: 10,
+    // distanceFilter: 1,
   );
 
   try {

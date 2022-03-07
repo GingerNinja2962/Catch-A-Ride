@@ -14,7 +14,7 @@ class CameraControllers {
         target: LatLng(
             globals.currentPosition!.latitude,
             globals.currentPosition!.longitude),
-        zoom: 18.5,
+        zoom: 16.5,
       );
       _animateCamera();
     }
@@ -26,7 +26,7 @@ class CameraControllers {
         target: LatLng(
             globals.currentPosition!.latitude,
             globals.currentPosition!.longitude),
-        zoom: 18.5,
+        zoom: 16.5,
         tilt: 40,
       );
       _animateCamera();
@@ -37,7 +37,7 @@ class CameraControllers {
     if (globals.current != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.current!.position,
-        zoom: 18.5,
+        zoom: 16.5,
       );
       _animateCamera();
     }
@@ -47,7 +47,7 @@ class CameraControllers {
     if (globals.current != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.current!.position,
-        zoom: 18.5,
+        zoom: 16.5,
         tilt: 60,
       );
       _animateCamera();
@@ -58,7 +58,7 @@ class CameraControllers {
     if (globals.destination != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.destination!.position,
-        zoom: 18.5,
+        zoom: 16.5,
       );
       _animateCamera();
     }
@@ -68,7 +68,7 @@ class CameraControllers {
     if (globals.destination != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.destination!.position,
-        zoom: 18.5,
+        zoom: 16.5,
         tilt: 60.0,
       );
       _animateCamera();
@@ -94,17 +94,20 @@ class CameraControllers {
         (position != null)
         ? {
           globals.currentPosition = position,
-          globals.currentCameraPosition = CameraPosition(
-              target: LatLng(
-                  globals.currentPosition!.latitude,
-                  globals.currentPosition!.longitude),
-              zoom: 17.5,
-            ),
-          if (globals.followUser != null) {if (globals.followUser!) {
-            _animateCamera(),
-            print("camera should update to current")
-          }},
-          notifyParent(),
+          if (globals.followUser != null) {
+            if (globals.followUser!) {
+              globals.currentCameraPosition = CameraPosition(
+                target: LatLng(
+                    globals.currentPosition!.latitude,
+                    globals.currentPosition!.longitude),
+                zoom: 16.5,
+                bearing: globals.currentPosition!.heading,
+              ),
+              _animateCamera(),
+              print("camera should update to current")
+            }
+          },
+          // notifyParent(),
         } : null;
       });
     } catch (e) {

@@ -20,7 +20,9 @@ class _MapWidgetState extends State<MapModel> {
   void initState() {
     globals.followUser = true;
     cameraControllers = CameraControllers(notifyParent: widget.notifyParent);
-    cameraControllers.setCameraPositionToCurrent();
+    setState(() {
+      cameraControllers.setCameraPositionToCurrent();
+    });
     super.initState();
   }
 
@@ -28,6 +30,8 @@ class _MapWidgetState extends State<MapModel> {
   Widget build(BuildContext context) {
     return GoogleMap(
       myLocationButtonEnabled: false,
+      myLocationEnabled: true,
+      tiltGesturesEnabled: false,
       zoomControlsEnabled: false,
       mapToolbarEnabled: false,
       compassEnabled: false,
@@ -36,22 +40,13 @@ class _MapWidgetState extends State<MapModel> {
       markers: {
         if (globals.current != null) globals.current!,
         if (globals.destination != null) globals.destination!,
-        if (globals.currentPosition != null)
-        Marker(
-          markerId: const MarkerId("current user position"),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-          infoWindow: const InfoWindow(title: "Current GeoLocation"),
-          position: LatLng(
-              globals.currentPosition!.latitude,
-              globals.currentPosition!.longitude),
-        ),
       },
       polylines: {
         if (globals.info != null) _polyline(),
       },
       onLongPress: _addDestination,
       onTap: _addCurrent,
-      onCameraMove: (CameraPosition camPosition) => globals.followUser = false,
+      onCameraMoveStarted: () => globals.followUser = false,
     );
   }
 
