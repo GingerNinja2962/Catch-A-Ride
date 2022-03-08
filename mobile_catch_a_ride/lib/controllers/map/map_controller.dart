@@ -26,7 +26,6 @@ class _MapWidgetState extends State<MapModel> {
     globals.followUser = true;
     cameraControllers = CameraControllers(notifyParent: widget.notifyParent);
     cameraControllers.setCameraPositionToCurrent();
-    print("=========== Map Init Finished ==========="); // TODO remove
   }
 
   @override

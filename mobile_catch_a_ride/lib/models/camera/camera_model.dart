@@ -38,7 +38,7 @@ class CameraControllers {
     if (globals.current != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.current!.position,
-        zoom: 16.5,
+        zoom: 17.5,
       );
       _animateCamera();
     }
@@ -48,7 +48,7 @@ class CameraControllers {
     if (globals.current != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.current!.position,
-        zoom: 16.5,
+        zoom: 17.5,
         tilt: 60,
       );
       _animateCamera();
@@ -59,7 +59,7 @@ class CameraControllers {
     if (globals.destination != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.destination!.position,
-        zoom: 16.5,
+        zoom: 17.5,
       );
       _animateCamera();
     }
@@ -69,7 +69,7 @@ class CameraControllers {
     if (globals.destination != null) {
       globals.currentCameraPosition = CameraPosition(
         target: globals.destination!.position,
-        zoom: 16.5,
+        zoom: 17.5,
         tilt: 60.0,
       );
       _animateCamera();

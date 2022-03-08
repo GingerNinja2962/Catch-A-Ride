@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile_catch_a_ride/views/map/map_view.dart';
+import 'package:mobile_catch_a_ride/views/passangers/passangers_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blueAccent,
       ),
+      // home: const PassengerScreen(),
       home: const MapScreen(),
     );
   }
