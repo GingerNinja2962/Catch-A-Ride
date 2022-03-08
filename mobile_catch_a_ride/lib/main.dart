@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_catch_a_ride/View_models/Map_screen/map_screen.dart';
+
+import 'package:mobile_catch_a_ride/views/map/map_view.dart';
 
 void main() {
   runApp(const MyApp());

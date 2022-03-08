@@ -1,9 +1,13 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:mobile_catch_a_ride/View_models/globals.dart' as globals;
-import 'package:mobile_catch_a_ride/Directions_API/directions_repo.dart';
-import '../Camera_functions/camera_functions.dart';
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
+
+import 'package:mobile_catch_a_ride/models/camera/gesture_detector.dart';
+import 'package:mobile_catch_a_ride/models/camera/camera_model.dart';
+import 'package:mobile_catch_a_ride/models/directions/directions_repo.dart';
 
 class MapModel extends StatefulWidget {
   final Function() notifyParent;
@@ -18,35 +22,40 @@ class _MapWidgetState extends State<MapModel> {
 
   @override
   void initState() {
+    super.initState();
     globals.followUser = true;
     cameraControllers = CameraControllers(notifyParent: widget.notifyParent);
-    setState(() {
-      cameraControllers.setCameraPositionToCurrent();
-    });
-    super.initState();
+    cameraControllers.setCameraPositionToCurrent();
+    print("=========== Map Init Finished ==========="); // TODO remove
   }
 
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      myLocationButtonEnabled: false,
-      myLocationEnabled: true,
-      tiltGesturesEnabled: false,
-      zoomControlsEnabled: false,
-      mapToolbarEnabled: false,
-      compassEnabled: false,
-      initialCameraPosition: globals.currentCameraPosition!,
-      onMapCreated: (controller) => globals.googleMapController = controller,
-      markers: {
-        if (globals.current != null) globals.current!,
-        if (globals.destination != null) globals.destination!,
-      },
-      polylines: {
-        if (globals.info != null) _polyline(),
-      },
-      onLongPress: _addDestination,
-      onTap: _addCurrent,
-      onCameraMoveStarted: () => globals.followUser = false,
+        myLocationButtonEnabled: false,
+        myLocationEnabled: true,
+        tiltGesturesEnabled: false,
+        zoomControlsEnabled: false,
+        mapToolbarEnabled: false,
+        compassEnabled: false,
+        initialCameraPosition: globals.currentCameraPosition!,
+        onMapCreated: (controller) => globals.googleMapController = controller,
+        markers: {
+          if (globals.current != null) globals.current!,
+          if (globals.destination != null) globals.destination!,
+        },
+        polylines: {
+          if (globals.info != null) _polyline(),
+        },
+        onLongPress: _addDestination,
+        onTap: _addCurrent,
+        gestureRecognizers: Set() ..add(Factory<PanGestureRecognizer>(() => DetectUserPan(() {
+          if (globals.followUser!) {
+            setState(() {
+              globals.followUser = false;
+            });
+          }
+        }))),
     );
   }
 

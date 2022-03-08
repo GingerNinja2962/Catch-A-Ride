@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile_catch_a_ride/View_models/globals.dart' as globals;
-import 'package:mobile_catch_a_ride/View_models/Map_screen/Map_elements/map_model.dart';
-import 'package:mobile_catch_a_ride/View_models/Map_screen/Map_elements/positioned_model.dart';
-import 'package:mobile_catch_a_ride/View_models/Map_screen/Map_elements/text_buttons_model.dart';
-import 'package:mobile_catch_a_ride/View_models/Map_screen/Map_elements/floating_action_button_model.dart';
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
+
+import 'package:mobile_catch_a_ride/controllers/map/map_controller.dart';
+import 'package:mobile_catch_a_ride/controllers/position/position_controller.dart';
+import 'package:mobile_catch_a_ride/controllers/floating_action_button/floating_action_button_controller.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);

@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 
 Stream<Position> getPositionStream() {
   const LocationSettings locationSettings = LocationSettings(
-    accuracy: LocationAccuracy.high,
+    accuracy: LocationAccuracy.bestForNavigation,
     // distanceFilter: 1,
   );
 
@@ -47,4 +47,14 @@ Future<void> _setupPermissions() async {
   if (permission == LocationPermission.deniedForever) {
     return Future.error("Location Permissions are permanently denied, permissions can no longer be requested.");
   }
+}
+
+Future<Position> _getLastKnownLocation() async {
+  Position? position;
+
+  position = await Geolocator.getLastKnownPosition();
+  if (position == null) {
+    Future.error("There is no Last known Location information found on the device.");
+  }
+  return position!;
 }

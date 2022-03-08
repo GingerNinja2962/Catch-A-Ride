@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:mobile_catch_a_ride/View_models/globals.dart' as globals;
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
 
 class CurrentTextButtonModel extends StatefulWidget {
   const CurrentTextButtonModel({Key? key}) : super(key: key);

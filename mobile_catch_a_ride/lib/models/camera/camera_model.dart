@@ -1,8 +1,9 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../Directions_API/current_location_query.dart';
-import 'package:mobile_catch_a_ride/View_models/globals.dart' as globals;
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
+
+import 'package:mobile_catch_a_ride/models/directions/geolocator_model.dart';
 
 class CameraControllers {
   final Function() notifyParent;
@@ -89,31 +90,25 @@ class CameraControllers {
   }
 
   Future<void> setCameraPositionToCurrent() async {
-    try {
-      getPositionStream().listen((Position? position) {
-        (position != null)
-        ? {
-          globals.currentPosition = position,
-          if (globals.followUser != null) {
-            if (globals.followUser!) {
-              globals.currentCameraPosition = CameraPosition(
-                target: LatLng(
-                    globals.currentPosition!.latitude,
-                    globals.currentPosition!.longitude),
-                zoom: 16.5,
-                bearing: globals.currentPosition!.heading,
-              ),
-              _animateCamera(),
-              print("camera should update to current")
-            }
-          },
-          // notifyParent(),
-        } : null;
-      });
-    } catch (e) {
-      print("Error : ${e.toString()}");
-    }
-
+    getPositionStream().listen((Position? position) {
+      (position != null)
+      ? {
+        globals.currentPosition = position,
+        if (globals.followUser != null) {
+          if (globals.followUser!) {
+            globals.currentCameraPosition = CameraPosition(
+              target: LatLng(
+                  globals.currentPosition!.latitude,
+                  globals.currentPosition!.longitude),
+              zoom: 16.5,
+              bearing: globals.currentPosition!.heading,
+            ),
+            _animateCamera(),
+          }
+        },
+        notifyParent(),
+      } : null;
+    });
     globals.currentCameraPosition = const CameraPosition(
       target:
       // LatLng(-26.076143, 28.200449), // Terenure

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile_catch_a_ride/View_models/globals.dart' as globals;
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
 
 class PositionedModel extends StatefulWidget {
   const PositionedModel({Key? key}) : super(key: key);

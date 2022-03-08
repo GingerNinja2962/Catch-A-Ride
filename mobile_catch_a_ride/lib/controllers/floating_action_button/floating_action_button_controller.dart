@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile_catch_a_ride/View_models/globals.dart' as globals;
-import 'package:mobile_catch_a_ride/View_models/Map_screen/Camera_functions/camera_functions.dart';
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
+
+import 'package:mobile_catch_a_ride/models/camera/camera_model.dart';
 
 class FloatingActionButtonModel extends StatefulWidget {
   final Function() notifyParent;
@@ -54,12 +55,12 @@ class _FloatingActionButtonModelState extends State<FloatingActionButtonModel> {
       (doubleTapCount == 0)
       ? {
         globals.followUser = false,
-        cameraControllers.animateCameraToDestinationMarkerTilted()
+        cameraControllers.animateCameraToDestinationMarkerTilted(),
       } : null,
       (doubleTapCount == 1)
       ? {
         globals.followUser = false,
-        cameraControllers.animateCameraToDestinationMarker()
+        cameraControllers.animateCameraToDestinationMarker(),
       } : null,
       (doubleTapCount == 1)
           ? doubleTapCount = 0
@@ -73,25 +74,25 @@ class _FloatingActionButtonModelState extends State<FloatingActionButtonModel> {
     ? (globals.current != null)
       ? {
         globals.followUser = false,
-        cameraControllers.animateCameraToCurrentMarkerTilted()
+        cameraControllers.animateCameraToCurrentMarkerTilted(),
       } : tapCount += 2
     : null;
     (tapCount == 1)
     ? (globals.current != null)
       ? {
       globals.followUser = false,
-      cameraControllers.animateCameraToCurrentMarker()
+      cameraControllers.animateCameraToCurrentMarker(),
       } : tapCount += 2
     : null;
     (tapCount == 2)
     ? {
       globals.followUser = true,
-      cameraControllers.animateCameraToCurrentLocationTilted()
+      cameraControllers.animateCameraToCurrentLocationTilted(),
     } : null;
     (tapCount == 3)
     ? {
       globals.followUser = true,
-      cameraControllers.animateCameraToCurrentLocation()
+      cameraControllers.animateCameraToCurrentLocation(),
     } : null;
     (tapCount == 3)
     ? tapCount = 0

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mobile_catch_a_ride/env/.env.dart';
-import 'package:mobile_catch_a_ride/Directions_API/directions_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:mobile_catch_a_ride/env/.env.dart';
+import 'package:mobile_catch_a_ride/models/directions/directions_model.dart';
 
 class DirectionsRepository {
   static const String _baseURL = 'https://maps.googleapis.com/maps/api/directions/json?';
