@@ -12,3 +12,9 @@ Marker? current;
 Marker? destination;
 Directions? info;
 bool? followUser;
+
+bool homeSelected = false;
+bool mapSelected = false;
+bool profileSelected = false;
+bool settingsSelected = false;
+bool helpSelected = false;

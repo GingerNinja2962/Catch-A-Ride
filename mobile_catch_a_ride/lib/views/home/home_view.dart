@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
+// import 'package:mobile_catch_a_ride/views/globals.dart' as globals; // TODO remove if not used
 import 'package:mobile_catch_a_ride/controllers/nav_drawer/nav_drawer_controller.dart';
-import 'package:mobile_catch_a_ride/controllers/floating_action_button/floating_action_button_controller.dart';
+import 'package:mobile_catch_a_ride/controllers/floating_action_button/floating_action_button_controller.dart'; // TODO remove if not used
 
-class PassengerScreen extends StatefulWidget {
-  const PassengerScreen({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
-  _PassengerScreenState createState() => _PassengerScreenState();
+  _HomeViewState createState() => _HomeViewState();
 }
 
-class _PassengerScreenState extends State<PassengerScreen> {
+class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavDrawer(),
+      drawer: NavDrawer(),
       appBar: AppBar(
         centerTitle: false,
+        backgroundColor: Colors.black45,
         title: const Text("Catch A Ride"),
       ),
       body: Stack(

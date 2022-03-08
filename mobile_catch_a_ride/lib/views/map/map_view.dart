@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_catch_a_ride/controllers/nav_drawer/nav_drawer_controller.dart';
 
 import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
 
@@ -6,14 +7,14 @@ import 'package:mobile_catch_a_ride/controllers/map/map_controller.dart';
 import 'package:mobile_catch_a_ride/controllers/position/position_controller.dart';
 import 'package:mobile_catch_a_ride/controllers/floating_action_button/floating_action_button_controller.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+class MapView extends StatefulWidget {
+  const MapView({Key? key}) : super(key: key);
 
   @override
-  _MapScreenState createState() => _MapScreenState();
+  _MapViewState createState() => _MapViewState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapViewState extends State<MapView> {
 
   @override
   void dispose() {
@@ -24,8 +25,10 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         centerTitle: false,
+        backgroundColor: Colors.black45,
         title: const Text("Catch A Ride"),
       ),
       body: Stack(

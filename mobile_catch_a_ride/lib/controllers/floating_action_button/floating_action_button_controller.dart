@@ -28,14 +28,17 @@ class _FloatingActionButtonModelState extends State<FloatingActionButtonModel> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      splashColor: Colors.greenAccent,
+      splashColor: Colors.grey,
       onLongPress: _onLongPress,
       onDoubleTap: _onDoublePress,
       child: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.black54,
         foregroundColor: Colors.black,
         onPressed: _onPress,
-        child: const Icon(Icons.center_focus_strong),
+        child: const Icon(
+            Icons.center_focus_strong,
+            color: Colors.grey
+        ),
       ),
     );
   }

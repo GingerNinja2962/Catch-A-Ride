@@ -27,11 +27,11 @@ class _PositionedModelState extends State<PositionedModel> {
 
   BoxDecoration _boxDecoration() {
     return BoxDecoration(
-        color: Colors.blueAccent,
+        color: Colors.black45,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: const [
           BoxShadow(
-            color: Colors.black26,
+            color: Colors.black87,
             offset: Offset(0, 2),
             blurRadius: 6.0,
           ),
@@ -45,6 +45,7 @@ class _PositionedModelState extends State<PositionedModel> {
       style: const TextStyle(
         fontSize: 18.0,
         fontWeight: FontWeight.w600,
+        color: Colors.grey,
       ),
     );
   }
