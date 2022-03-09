@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // checkerboardRasterCacheImages: true,
+      // checkerboardRasterCacheImages: true, // TODO CHECK if images are cached
       debugShowCheckedModeBanner: false,
       title: 'Catch a Ride',
       theme: ThemeData(

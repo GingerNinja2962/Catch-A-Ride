@@ -11,20 +11,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_catch_a_ride/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Test testing widgets', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Catch A Ride'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(find.text('Welcome'), findsNothing);
+    expect(find.text('Catch-A-Ride'), findsNothing);
+    expect(find.text('Profile'), findsNothing);
+    expect(find.text('Help'), findsNothing);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('Test NavMenu Population (Titles and Icons)', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.dragFrom(tester.getTopLeft(find.byType(MaterialApp)), Offset(300, 0));
+    await tester.pumpAndSettle();
+
+    expect(find.text("Henry Wessels"), findsOneWidget);
+    expect(find.byIcon(Icons.settings), findsNWidgets(2));
+    expect(find.text('Welcome'), findsOneWidget);
+    expect(find.byIcon(Icons.input), findsOneWidget);
+    expect(find.text('Catch-A-Ride'), findsOneWidget);
+    expect(find.byIcon(Icons.directions_car_rounded), findsOneWidget);
+    expect(find.text('Profile'), findsOneWidget);
+    expect(find.byIcon(Icons.verified_user), findsOneWidget);
+    expect(find.text('Help'), findsOneWidget);
+    expect(find.byIcon(Icons.help_center_rounded), findsOneWidget);
   });
 }

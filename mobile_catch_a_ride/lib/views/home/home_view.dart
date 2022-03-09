@@ -16,7 +16,8 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
 
-    globals.userProfileImage = const AssetImage('assets/images/test_default_image_v4.jpg');
+    globals.userProfileName = "Henry Wessels"; // TODO make users data dynamic
+    globals.userProfileImage = const AssetImage('assets/images/test_default_image_v4.jpg'); // TODO set default image
   }
 
   @override
@@ -26,10 +27,11 @@ class _HomeViewState extends State<HomeView> {
     precacheImage(globals.userProfileImage!, context);
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavDrawer(),
+      key: const Key("HomePageView"),
+      drawer: const NavDrawer(),
       appBar: AppBar(
         centerTitle: false,
         backgroundColor: Colors.black45,
@@ -38,11 +40,9 @@ class _HomeViewState extends State<HomeView> {
       body: Stack(
         alignment: Alignment.center,
         children: const [
-          // NavDrawer(),
           Text("This is the List of available Passengers"),
         ],
       ),
-      // floatingActionButton: FloatingActionButtonModel(notifyParent: refresh),
     );
   }
 

@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:mobile_catch_a_ride/routes/routes.dart' as routes;
 import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
 
-
 class NavDrawer extends StatelessWidget {
-  NavDrawer({Key? key}) : super(key: key);
-  String _userName = "Henry Wessels"; // TODO make users data dynamic
-  // AssetImage _userImage = AssetImage('assets/images/test_default_image_v4.jpg'); // TODO make users data dynamic
+  const NavDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      key: const Key("NavigationMenu"),
       backgroundColor: Colors.black12,
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           _getDrawerHeader(context),
           ListTile(
-            // enabled: !globals.homeSelected, // Alternative to blue highlighted disable
+            key: const Key("WelcomeListTile"),
             selected: globals.homeSelected,
             leading: const Icon(Icons.input),
             title: const Text('Welcome'),
@@ -27,6 +25,7 @@ class NavDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            key: const Key("CatchARideListTile"),
             selected: globals.mapSelected,
             leading: const Icon(Icons.directions_car_rounded),
             title: const Text('Catch-A-Ride'),
@@ -35,6 +34,7 @@ class NavDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            key: const Key("ProfileListTile"),
             selected: globals.profileSelected,
             leading: const Icon(Icons.verified_user),
             title: const Text('Profile'),
@@ -43,6 +43,7 @@ class NavDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            key: const Key("HelpListTile"),
             selected: globals.helpSelected,
             leading: const Icon(Icons.help_center_rounded),
             title: const Text('Help'),
@@ -57,6 +58,7 @@ class NavDrawer extends StatelessWidget {
 
   DrawerHeader _getDrawerHeader(BuildContext context){
     return DrawerHeader(
+      key: const Key("NavMenuDrawerHeader"),
       child: Column(
         children: <Widget>[
           Row(
@@ -71,8 +73,7 @@ class NavDrawer extends StatelessWidget {
           image: DecorationImage(
               fit: BoxFit.fill,
               colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstIn),
-              image: globals.userProfileImage!, // TODO precache
-              // image: _userImage, // TODO remove
+              image: globals.userProfileImage!,
           )
       ),
     );
@@ -83,16 +84,20 @@ class NavDrawer extends StatelessWidget {
       onTap: () => {
       _setCurrentRoute(routes.settingsPageRoute, context),
       },
+      key: const Key("SettingsInkWell"),
       child: Stack(
+        key: const Key("SettingsIconStack"),
         children: const <Widget>[
           Icon(
             Icons.settings,
+            key: Key("SettingsIconBlack"),
             color: Colors.black54,
             size: 30,
           ),
           Positioned(
             child: Icon(
               Icons.settings,
+              key: Key("SettingsIconWhite"),
               color: Colors.white,
               size: 26,
             ),
@@ -104,24 +109,23 @@ class NavDrawer extends StatelessWidget {
     );
   }
 
-  Stack _getStack() {
-    return Stack(
-      children: [
-        Text(
-          _userName,
-          style: const TextStyle(
-              color: Colors.white,
-              fontSize: 29,
-              shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(5.0, 5.0),
-                  blurRadius: 3.0,
-                  color: Colors.black87,
-                ),
-              ],
-          ),
+  Text _getStack() {
+    return Text(
+        (globals.userProfileName != null)
+        ? globals.userProfileName!
+        : "Anonymous",
+        key: const Key("UserNameText"),
+        style: const TextStyle(
+            color: Colors.white,
+            fontSize: 29,
+            shadows: <Shadow>[
+              Shadow(
+                offset: Offset(5.0, 5.0),
+                blurRadius: 3.0,
+                color: Colors.black87,
+              ),
+            ],
         ),
-      ],
     );
   }
 
@@ -129,7 +133,7 @@ class NavDrawer extends StatelessWidget {
     (route == routes.settingsPageRoute)
     ? { if (globals.settingsSelected != true) {
       globals.settingsSelected = true,
-      // Navigator.popAndPushNamed(context, routes.settingsPageRoute), // TODO MAKE help page
+      // Navigator.popAndPushNamed(context, routes.settingsPageRoute), // TODO MAKE settings page
     }} : globals.settingsSelected = false;
 
     (route == routes.homePageRoute)
@@ -147,7 +151,7 @@ class NavDrawer extends StatelessWidget {
     (route == routes.profilePageRoute)
     ? { if (globals.profileSelected != true) {
         globals.profileSelected = true,
-        // Navigator.popAndPushNamed(context, routes.profilePageRoute), // TODO MAKE help page
+        // Navigator.popAndPushNamed(context, routes.profilePageRoute), // TODO MAKE profile page
     }} : globals.profileSelected = false;
 
     (route == routes.helpAndAboutPageRoute)

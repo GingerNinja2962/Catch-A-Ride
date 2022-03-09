@@ -22,3 +22,4 @@ bool settingsSelected = false;
 bool helpSelected = false;
 
 AssetImage? userProfileImage; // TODO precache
+String? userProfileName; // TODO make dynamic from server DB lookup with login verification
