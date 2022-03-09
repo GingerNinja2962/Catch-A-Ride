@@ -1,5 +1,7 @@
 library mobile_catch_a_ride.globals;
 
+import 'package:flutter/material.dart';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -18,3 +20,5 @@ bool mapSelected = false;
 bool profileSelected = false;
 bool settingsSelected = false;
 bool helpSelected = false;
+
+AssetImage? userProfileImage; // TODO precache

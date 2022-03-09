@@ -7,7 +7,7 @@ import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
 class NavDrawer extends StatelessWidget {
   NavDrawer({Key? key}) : super(key: key);
   String _userName = "Henry Wessels"; // TODO make users data dynamic
-  AssetImage _userImage = AssetImage('assets/images/_user_image.jpg'); // TODO make users data dynamic
+  // AssetImage _userImage = AssetImage('assets/images/test_default_image_v4.jpg'); // TODO make users data dynamic
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class NavDrawer extends StatelessWidget {
         children: <Widget>[
           _getDrawerHeader(context),
           ListTile(
+            // enabled: !globals.homeSelected, // Alternative to blue highlighted disable
             selected: globals.homeSelected,
             leading: const Icon(Icons.input),
             title: const Text('Welcome'),
@@ -63,20 +64,15 @@ class NavDrawer extends StatelessWidget {
               _getInkWell(context)
             ],
           ),
-          Text(
-            _userName,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 25
-            ),
-          ),
+          _getStack(),
         ],
       ),
       decoration: BoxDecoration(
-          color: Colors.green,
           image: DecorationImage(
               fit: BoxFit.fill,
-              image: _userImage,
+              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstIn),
+              image: globals.userProfileImage!, // TODO precache
+              // image: _userImage, // TODO remove
           )
       ),
     );
@@ -91,7 +87,7 @@ class NavDrawer extends StatelessWidget {
         children: const <Widget>[
           Icon(
             Icons.settings,
-            color: Colors.black,
+            color: Colors.black54,
             size: 30,
           ),
           Positioned(
@@ -105,6 +101,27 @@ class NavDrawer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Stack _getStack() {
+    return Stack(
+      children: [
+        Text(
+          _userName,
+          style: const TextStyle(
+              color: Colors.white,
+              fontSize: 29,
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(5.0, 5.0),
+                  blurRadius: 3.0,
+                  color: Colors.black87,
+                ),
+              ],
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-// import 'package:mobile_catch_a_ride/views/globals.dart' as globals; // TODO remove if not used
+import 'package:mobile_catch_a_ride/views/globals.dart' as globals; // TODO remove if not used
 import 'package:mobile_catch_a_ride/controllers/nav_drawer/nav_drawer_controller.dart';
-import 'package:mobile_catch_a_ride/controllers/floating_action_button/floating_action_button_controller.dart'; // TODO remove if not used
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -14,6 +13,20 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
   @override
+  void initState() {
+    super.initState();
+
+    globals.userProfileImage = const AssetImage('assets/images/test_default_image_v4.jpg');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(globals.userProfileImage!, context);
+  }
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavDrawer(),
