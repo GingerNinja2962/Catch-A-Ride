@@ -17,18 +17,28 @@ jobs:
     - name: Build the Docker image
       run: |
         docker-compose up -d
-        mkdir built_releases
+        echo "=========================================================="
+        mkdir ./built_releases
+        echo "=========================================================="
         docker ps -a -q
+        echo "=========================================================="
         docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/ ./built_releases
+        echo "=========================================================="
         ls -la mobile_catch_a_ride
-        ls -la mobile_catch_a_ride/built_releases
+        echo "=========================================================="
+        ls -la ./
+        echo "=========================================================="
+        ls -la ./built_releases
 
     - uses: actions/checkout@v2
     - name: Testing finding files
       run: |
+        echo "=========================================================="
+        ls -la ./
+        echo "=========================================================="
         ls -la mobile_catch_a_ride
         echo "=========================================================="
-        ls -la mobile_catch_a_ride/built_releases
+        ls -la ./built_releases
 
     - name: Release APKs
       uses: softprops/action-gh-release@v0.1.5
