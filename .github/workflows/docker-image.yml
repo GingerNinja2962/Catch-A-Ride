@@ -9,9 +9,12 @@ on:
   pull_request:
     branches: [ main ]
 
+  workflow_dispatch:
+
 jobs:
   Build:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -30,6 +33,11 @@ jobs:
         if-no-files-found: error
 
 
+  Release:
+    needs: [Build]
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: softprops/action-gh-release@v0.1.5
 
     - uses: actions/download-artifact@v3
@@ -42,3 +50,16 @@ jobs:
         files: |
           ./bundle-release
           ./APK-release
+  
+
+  Cleanup:
+    needs: [Build, Release]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: call webhook to delete artifacts
+      env:
+        FOR_WEBHOOKS_SECRET: ${{ secrets.WEBHOOKS_SECRET }}
+      run: |
+        echo "::add-mask::$FOR_WEBHOOKS_SECRET"
+        curl --verbose --fail --show-error --location --request POST "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" --header "Authorization: token $FOR_WEBHOOKS_SECRET" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.everest-preview+json' --data-raw "{ \"event_type\": \"delete_all_artifacts\", \"client_payload\": {\"parent_runid\": \"$GITHUB_RUN_ID\", \"parent_repo\": \"$GITHUB_REPOSITORY\"} }"
