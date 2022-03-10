@@ -19,27 +19,30 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        docker-compose up -d
         mkdir -p ./build_releases/{APK_releases, bundle_releases}
-        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases
-        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases
+#        docker-compose up -d
+#        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases
+#        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases
 
     - name: Check the files
       run: |
+        ls -la
         ls -la ./build_releases/APK_releases
         ls -la ./build_releases/bundle_releases
 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: APK_releases
-        path: ./build_releases/APK_releases
-        if-no-files-found: error
+#     - uses: actions/upload-artifact@v3
+#     - name: Upload APKs
+#       with:
+#         name: APK_releases
+#         path: ./build_releases/APK_releases
+#         if-no-files-found: error
 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: bundle_releases
-        path: ./build_releases/bundle_releases
-        if-no-files-found: error
+#     - uses: actions/upload-artifact@v3
+#     - name: Upload bundle
+#       with:
+#         name: bundle_releases
+#         path: ./build_releases/bundle_releases
+#         if-no-files-found: error
 
 
 #   Release:
