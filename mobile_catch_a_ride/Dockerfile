@@ -42,6 +42,3 @@ RUN cd mobile_catch_a_ride && flutter test
 # Build the APK and bundles to be released
 RUN cd mobile_catch_a_ride && flutter build appbundle --obfuscate --split-debug-info=./obfuscate_debug
 RUN cd mobile_catch_a_ride &&flutter build apk --split-per-abi --obfuscate --split-debug-info=./obfuscate_debug
-
-#RUN ls -la mobile_catch_a_ride/build/app/outputs/apk/release/
-#RUN ls -la mobile_catch_a_ride/build/app/outputs/bundle/release/

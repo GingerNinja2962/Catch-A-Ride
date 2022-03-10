@@ -8,8 +8,6 @@ services:
       context: mobile_catch_a_ride
       dockerfile: Dockerfile
     image: henrywessels/catch-a-ride:v1
-    ports:
-      - "2162:2162"
 
 # =======[ Uncomment when server is docker runnable ]=======
 #  javalin:
