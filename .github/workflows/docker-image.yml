@@ -12,10 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker-compose up -d
+      run: |
+        docker-compose up -d
+        ls -la
+        mkdir built_releases
+        docker cp $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/ ./built_releases
+        ls -la
 
-#     - name: Copy Docker APK to host
-#       run: docker cp $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/release/app-release.apk ./
+    - name: Copy Docker APK to host
+      run: ls -la
+      #docker cp $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/app-release.apk ./
 
     - name: Release APKs
       uses: softprops/action-gh-release@v0.1.5
@@ -23,8 +29,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-#         files: app-release.apk
-        files: $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/
+        files: |
+#          $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/
 
 #     - name: Release bundle
 #       uses: softprops/action-gh-release@v0.1.5
