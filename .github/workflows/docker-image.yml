@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: |
-        mkdir -p ./build_releases/{APK_releases, bundle_releases}
+        mkdir -p ./build_releases/{APK_releases,bundle_releases}
 #        docker-compose up -d
 #        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases
 #        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases
