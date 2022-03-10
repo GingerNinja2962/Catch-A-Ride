@@ -8,11 +8,14 @@ on:
 
 jobs:
 
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker-compose up -d
+    - uses: docker/build-push-action@v2
+    - name: Build Flutter Docker Image
+      with:
+        file: ./mobile_catch_a_ride/Dockerfile
+        push: true
+        pull: false
+        tag: user/app:latest
+#       run: docker-compose up -d
