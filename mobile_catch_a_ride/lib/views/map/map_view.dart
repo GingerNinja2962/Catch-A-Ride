@@ -23,6 +23,13 @@ class _MapViewState extends State<MapView> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(globals.userProfileImage!, context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavDrawer(),

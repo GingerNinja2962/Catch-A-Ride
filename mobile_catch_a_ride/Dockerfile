@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 as base
 
 ENV ZA=Africa/Johannesburg
 ENV USER="Henry"
@@ -36,5 +36,12 @@ RUN mkdir mobile_catch_a_ride
 COPY ./ mobile_catch_a_ride
 RUN echo "$USER" | sudo -S chown -R $USER:$USER ./mobile_catch_a_ride
 
-FROM base as Test
+#FROM base as Test
 RUN cd mobile_catch_a_ride && flutter test
+
+#FROM base as Build \
+RUN flutter build appbundle --obfuscate --split-debug-info=./mobile_catch_a_ride/obfuscate_debug
+RUN flutter build apk --split-per-abi --obfuscate --split-debug-info=./mobile_catch_a_ride/obfuscate_debug
+
+RUN ls -la mobile_catch_a_ride/build/app/outputs/apk/release/
+RUN ls -la mobile_catch_a_ride/build/app/outputs/bundle/release/
