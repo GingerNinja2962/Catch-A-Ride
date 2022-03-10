@@ -1,5 +1,8 @@
 name: Docker Build, Test, APK release
 
+env:
+  USER: Henry
+
 on:
   push:
     branches: [ main ]
@@ -16,7 +19,7 @@ jobs:
         docker-compose up -d
         mkdir built_releases
         docker ps -a -q
-        docker cp $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/ ./built_releases
+        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/ ./built_releases
         ls -la mobile_catch_a_ride
         ls -la mobile_catch_a_ride/built_releases
 
