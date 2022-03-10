@@ -1,0 +1,23 @@
+# docker-compose.yml
+version: '2'
+
+services:
+  flutter:
+    container_name: catch-a-ride-flutter-dev
+    build:
+      context: mobile_catch_a_ride
+      dockerfile: Dockerfile
+    image: henrywessels/catch-a-ride:v1
+    ports:
+      - "2162:2162"
+
+# =======[ Uncomment when server is docker runnable ]=======
+#  javalin:
+#    container_name: catch-a-ride-javalin-dev
+#    build:
+#      context: server_catch_a_ride
+#      dockerfile: Dockerfile
+#    restart: always
+#    image: henrywessels/catch-a-ride-server:v1
+#    ports:
+#      - "2962:2962"

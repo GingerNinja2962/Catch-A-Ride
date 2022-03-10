@@ -11,15 +11,15 @@ mobile_catch_a_ride/.history
 mobile_catch_a_ride/.svn/
 
 # IntelliJ related
-mobile_catch_a_ride/*.iml
-mobile_catch_a_ride/*.ipr
-mobile_catch_a_ride/*.iws
-mobile_catch_a_ride/.idea/
+**/*.iml
+**/*.ipr
+**/*.iws
+**/.idea/
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
-#.vscode/
+#**.vscode/
 
 # Flutter/Dart/Pub related
 mobile_catch_a_ride/**/doc/api/
@@ -42,6 +42,6 @@ mobile_catch_a_ride/app.*.symbols
 mobile_catch_a_ride/app.*.map.json
 
 # Android Studio will place build artifacts here
-mobile_catch_a_ride//android/app/debug
-mobile_catch_a_ride//android/app/profile
-mobile_catch_a_ride//android/app/release
+mobile_catch_a_ride/android/app/debug
+mobile_catch_a_ride/android/app/profile
+mobile_catch_a_ride/android/app/release
