@@ -36,12 +36,12 @@ RUN mkdir mobile_catch_a_ride
 COPY ./ mobile_catch_a_ride
 RUN echo "$USER" | sudo -S chown -R $USER:$USER ./mobile_catch_a_ride
 
-#FROM base as Test
+# Run all Flutter Tests
 RUN cd mobile_catch_a_ride && flutter test
 
-#FROM base as Build \
-RUN flutter build appbundle --obfuscate --split-debug-info=./mobile_catch_a_ride/obfuscate_debug
-RUN flutter build apk --split-per-abi --obfuscate --split-debug-info=./mobile_catch_a_ride/obfuscate_debug
+# Build the APK and bundles to be released
+RUN cd mobile_catch_a_ride && flutter build appbundle --obfuscate --split-debug-info=./obfuscate_debug
+RUN cd mobile_catch_a_ride &&flutter build apk --split-per-abi --obfuscate --split-debug-info=./obfuscate_debug
 
-RUN ls -la mobile_catch_a_ride/build/app/outputs/apk/release/
-RUN ls -la mobile_catch_a_ride/build/app/outputs/bundle/release/
+#RUN ls -la mobile_catch_a_ride/build/app/outputs/apk/release/
+#RUN ls -la mobile_catch_a_ride/build/app/outputs/bundle/release/
