@@ -14,14 +14,6 @@ jobs:
     - name: Build the Docker image
       run: |
         docker-compose up -d
-        ls -la
-#        docker cp $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/ ./built_releases
-
-    - name: Copy Docker APK to host
-      run: |
-        ls -la
-        echo "=================[ NEW CALL ]================="
-        ls -la $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/
 
     - name: Release APKs
       uses: softprops/action-gh-release@v0.1.5
@@ -31,6 +23,7 @@ jobs:
       with:
         files: |
           mobile_catch_a_ride/build/app/outputs/apk/release/
+          mobile_catch_a_ride/build/app/outputs/bundle/release/
 #          $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/
 
 #     - name: Release bundle
