@@ -20,6 +20,10 @@ jobs:
     - name: Build the Docker image
       run: docker-compose up -d
 
+    - name: finding files
+      run: |
+        ls -la $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release
+
     - uses: actions/upload-artifact@v3
       with:
         name: APK-releases
