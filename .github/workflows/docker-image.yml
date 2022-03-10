@@ -15,46 +15,30 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: |
-        docker-compose up -d
-        echo "=========================================================="
-        mkdir ./built_releases
-        echo "=========================================================="
-        docker ps -a -q
-        echo "=========================================================="
-        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/ ./built_releases
-        echo "=========================================================="
-        ls -la mobile_catch_a_ride
-        echo "=========================================================="
-        ls -la ./
-        echo "=========================================================="
-        ls -la ./built_releases
+      run: docker-compose up -d
 
-    - uses: actions/checkout@v2
-    - name: Testing finding files
-      run: |
-        echo "=========================================================="
-        ls -la ./
-        echo "=========================================================="
-        ls -la mobile_catch_a_ride
-        echo "=========================================================="
-        ls -la ./built_releases
+    - uses: actions/upload-artifact@v3
+      with:
+        name: APK-releases
+        path: $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: bundle-releases
+        path: $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release
+        if-no-files-found: error
+
+
+    - uses: softprops/action-gh-release@v0.1.5
+
+    - uses: actions/download-artifact@v3
 
     - name: Release APKs
-      uses: softprops/action-gh-release@v0.1.5
       if: startsWith(github.ref, 'refs/tags/')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: |
-          mobile_catch_a_ride/build/app/outputs/apk/release/
-          mobile_catch_a_ride/build/app/outputs/bundle/release/
-#          $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/
-
-#     - name: Release bundle
-#       uses: softprops/action-gh-release@v0.1.5
-#       if: startsWith(github.ref, 'refs/tags/')
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         files: $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/bundle/release/
+          ./bundle-release
+          ./APK-release
