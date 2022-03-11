@@ -42,19 +42,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: softprops/action-gh-release@v1
-      name: Download APKs and bundles
-      if: startsWith(github.ref, 'refs/tags/v')
-
+    - uses: actions/checkout@v2
     - uses: actions/download-artifact@v3
       name: Release APKs and bundles
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: softprops/action-gh-release@v1
+      name: Download APKs and bundles
+      if: startsWith(github.ref, 'refs/tags/v')
       with:
         files: |
           ./bundle-release
           ./APK-release
-  
+
 
   Cleanup:
     needs: [Build, Release]
