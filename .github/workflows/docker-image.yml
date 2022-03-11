@@ -10,54 +10,54 @@ on:
   workflow_dispatch:
 
 jobs:
-#   Build:
-#     runs-on: ubuntu-latest
+  Build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Build the Docker image
-#       run: |
-#         docker-compose up -d
-#         mkdir -p ./build_releases/{APK_releases,bundle_releases}
-#         docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases/APK_releases
-#         docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases/bundle_releases
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        docker-compose up -d
+        mkdir -p ./build_releases/{APK_releases,bundle_releases}
+        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases/APK_releases
+        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases/bundle_releases
 
-#     - uses: actions/upload-artifact@v3
-#       name: Create APK Artifact
-#       with:
-#         name: APK_releases
-#         path: ./build_releases/APK_releases
-#         if-no-files-found: error
+    - uses: actions/upload-artifact@v3
+      name: Create APK Artifact
+      with:
+        name: APK_releases
+        path: ./build_releases/APK_releases
+        if-no-files-found: error
 
-#     - uses: actions/upload-artifact@v3
-#       name: Create bundle Artifact
-#       with:
-#         name: bundle_releases
-#         path: ./build_releases/bundle_releases
-#         if-no-files-found: error
+    - uses: actions/upload-artifact@v3
+      name: Create bundle Artifact
+      with:
+        name: bundle_releases
+        path: ./build_releases/bundle_releases
+        if-no-files-found: error
 
 
-#   Release:
-#     needs: [Build]
-#     runs-on: ubuntu-latest
+  Release:
+    needs: [Build]
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - uses: softprops/action-gh-release@v1
-#       name: Download APKs and bundles
-#       if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+    - uses: softprops/action-gh-release@v1
+      name: Download APKs and bundles
+      if: startsWith(github.ref, 'refs/tags/v')
 
-#     - uses: actions/download-artifact@v3
-#       name: Release APKs and bundles
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         files: |
-#           ./bundle-release
-#           ./APK-release
+    - uses: actions/download-artifact@v3
+      name: Release APKs and bundles
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: |
+          ./bundle-release
+          ./APK-release
   
 
   Cleanup:
-#     needs: [Build, Release]
+    needs: [Build, Release]
     if: always()
     runs-on: ubuntu-latest
 
