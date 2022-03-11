@@ -1,35 +1,74 @@
-name: Docker Build, Test, APK release
+name: Docker Build and Test
+
+env:
+  USER: Henry
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+    - v**
+
+  workflow_dispatch:
 
 jobs:
   Build:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker-compose up -d
+      run: |
+        docker-compose up -d
+        mkdir -p ./build_releases/{APK_releases,bundle_releases}
+        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases/APK_releases
+        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases/bundle_releases
 
-#     - name: Copy Docker APK to host
-#       run: docker cp $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/release/app-release.apk ./
+    - uses: actions/upload-artifact@v3
+      name: Create APK Artifact
+      with:
+        name: APK_releases
+        path: ./build_releases/APK_releases
+        if-no-files-found: error
 
-    - name: Release APKs
-      uses: softprops/action-gh-release@v0.1.5
-      if: startsWith(github.ref, 'refs/tags/')
+    - uses: actions/upload-artifact@v3
+      name: Create bundle Artifact
+      with:
+        name: bundle_releases
+        path: ./build_releases/bundle_releases
+        if-no-files-found: error
+
+
+  Release:
+    needs: [Build]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v3
+      name: Download APKs and bundles
+      if: startsWith(github.ref, 'refs/tags/v')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-#         files: app-release.apk
-        files: $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/apk/release/
 
-#     - name: Release bundle
-#       uses: softprops/action-gh-release@v0.1.5
-#       if: startsWith(github.ref, 'refs/tags/')
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         files: $(docker ps -a -q):./mobile_catch_a_ride/build/app/outputs/bundle/release/
+    - uses: softprops/action-gh-release@v1
+      name: Release APKs and bundles
+      if: startsWith(github.ref, 'refs/tags/v')
+      with:
+        files: |
+          ./bundle-release
+          ./APK-release
+
+
+  Cleanup:
+    needs: [Build, Release]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: call webhook to delete artifacts
+      env:
+        FOR_WEBHOOKS_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+      run: |
+        echo "::add-mask::$FOR_WEBHOOKS_SECRET"
+        curl --verbose --fail --show-error --location --request POST "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" --header "Authorization: token $FOR_WEBHOOKS_SECRET" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.everest-preview+json' --data-raw "{ \"event_type\": \"delete_all_artifacts\", \"client_payload\": {\"parent_runid\": \"$GITHUB_RUN_ID\", \"parent_repo\": \"$GITHUB_REPOSITORY\"} }"
