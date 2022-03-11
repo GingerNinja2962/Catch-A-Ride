@@ -55,9 +55,9 @@ jobs:
       run: |
         ls -la ./
         ls -la Catch-A-Ride
-        ls -la Catch-A-Ride/bundle-release
-        ls -la Catch-A-Ride/APK-release
+        echo ===============================================================================
         ls -la bundle-release
+        echo ===============================================================================
         ls -la APK-release
 
 
