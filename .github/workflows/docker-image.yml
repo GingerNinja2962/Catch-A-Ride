@@ -46,7 +46,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: test
-      run: echo ${{ github.ref }}
+      run: |
+        echo ${{ github.ref }}
+        echo ${{ startsWith(github.ref, 'refs/tags/') }}
+
+    - name: test
+      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      run: |
+        echo IT WORKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 #     - uses: actions/download-artifact@v3
 #       name: Download APKs and bundles
 #       if: startsWith(github.ref, 'refs/tags/')
