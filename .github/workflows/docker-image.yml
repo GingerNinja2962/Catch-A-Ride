@@ -47,18 +47,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v3
       name: Download APKs and bundles
-#       if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      if: ${{ startsWith(github.ref, 'refs/tags/') }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Find Files
-      run: |
-        ls -la ./
-        echo ===============================================================================
-        ls -la bundle_releases/release
-        echo ===============================================================================
-        ls -la APK_releases/release
-
 
     - uses: softprops/action-gh-release@v1
       name: Release APKs and bundles
