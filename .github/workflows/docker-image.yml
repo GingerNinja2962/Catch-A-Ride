@@ -55,9 +55,9 @@ jobs:
       run: |
         ls -la ./
         echo ===============================================================================
-        ls -la bundle_releases
+        ls -la bundle_releases/release
         echo ===============================================================================
-        ls -la APK_releases
+        ls -la APK_releases/release
 
 
     - uses: softprops/action-gh-release@v1
@@ -65,8 +65,8 @@ jobs:
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
       with:
         files: |
-          ./bundle_releases
-          ./APK_releases
+          ./bundle_releases/release
+          ./APK_releases/release
 
 
   Cleanup:
