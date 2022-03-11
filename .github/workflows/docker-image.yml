@@ -55,9 +55,9 @@ jobs:
       run: |
         ls -la ./
         echo ===============================================================================
-        ls -la bundle-release
+        ls -la bundle-releases
         echo ===============================================================================
-        ls -la APK-release
+        ls -la APK-releases
 
 
 #     - uses: softprops/action-gh-release@v1
