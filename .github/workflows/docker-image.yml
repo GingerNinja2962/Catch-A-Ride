@@ -47,17 +47,27 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v3
       name: Download APKs and bundles
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+#       if: ${{ startsWith(github.ref, 'refs/tags/') }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: softprops/action-gh-release@v1
-      name: Release APKs and bundles
-      if: ${{ startsWith(github.ref, 'refs/tags/') }}
-      with:
-        files: |
-          /home/runner/work/Catch-A-Ride/Catch-A-Ride/bundle-release
-          /home/runner/work/Catch-A-Ride/Catch-A-Ride/APK-release
+    - name: Find Files
+      run: |
+        ls -la ./
+        ls -la Catch-A-Ride
+        ls -la Catch-A-Ride/bundle-release
+        ls -la Catch-A-Ride/APK-release
+        ls -la bundle-release
+        ls -la APK-release
+
+
+#     - uses: softprops/action-gh-release@v1
+#       name: Release APKs and bundles
+#       if: ${{ startsWith(github.ref, 'refs/tags/') }}
+#       with:
+#         files: |
+#           ./Catch-A-Ride/bundle-release
+#           ./Catch-A-Ride/APK-release
 
 
   Cleanup:
