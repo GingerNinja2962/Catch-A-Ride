@@ -1,12 +1,10 @@
-name: Docker Build, Test, APK release
+name: Docker Build and Test
 
 env:
   USER: Henry
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
   workflow_dispatch:
@@ -46,12 +44,12 @@ jobs:
     steps:
     - uses: softprops/action-gh-release@v1
       name: Download APKs and bundles
+      if: startsWith(github.ref, 'refs/tags/')
 
     - uses: actions/download-artifact@v3
       name: Release APKs and bundles
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
           ./bundle-release
