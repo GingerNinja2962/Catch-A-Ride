@@ -44,7 +44,7 @@ jobs:
     steps:
     - uses: softprops/action-gh-release@v1
       name: Download APKs and bundles
-      if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/v')
 
     - uses: actions/download-artifact@v3
       name: Release APKs and bundles
@@ -64,7 +64,7 @@ jobs:
     steps:
     - name: call webhook to delete artifacts
       env:
-        FOR_WEBHOOKS_SECRET: ${{ secrets.WEBHOOKS_SECRET }}
+        FOR_WEBHOOKS_SECRET: ${{ secrets.WEBHOOK_SECRET }}
       run: |
         echo "::add-mask::$FOR_WEBHOOKS_SECRET"
         curl --verbose --fail --show-error --location \
