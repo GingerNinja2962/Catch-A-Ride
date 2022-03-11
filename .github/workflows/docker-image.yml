@@ -18,25 +18,25 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: echo "testing"
-#        docker-compose up -d
-#        mkdir -p ./build_releases/{APK_releases,bundle_releases}
-#        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases/APK_releases
-#        docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases/bundle_releases
+      run: |
+       docker-compose up -d
+       mkdir -p ./build_releases/{APK_releases,bundle_releases}
+       docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/apk/release ./build_releases/APK_releases
+       docker cp $(docker ps -a -q):/home/$USER/mobile_catch_a_ride/build/app/outputs/bundle/release ./build_releases/bundle_releases
 
-#     - uses: actions/upload-artifact@v3
-#       name: Create APK Artifact
-#       with:
-#         name: APK_releases
-#         path: ./build_releases/APK_releases
-#         if-no-files-found: error
+    - uses: actions/upload-artifact@v3
+      name: Create APK Artifact
+      with:
+        name: APK_releases
+        path: ./build_releases/APK_releases
+        if-no-files-found: error
 
-#     - uses: actions/upload-artifact@v3
-#       name: Create bundle Artifact
-#       with:
-#         name: bundle_releases
-#         path: ./build_releases/bundle_releases
-#         if-no-files-found: error
+    - uses: actions/upload-artifact@v3
+      name: Create bundle Artifact
+      with:
+        name: bundle_releases
+        path: ./build_releases/bundle_releases
+        if-no-files-found: error
 
 
   Release:
@@ -45,40 +45,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: test
-      run: |
-        echo ${{ github.ref }}
-        echo ${{ startsWith(github.ref, 'refs/tags/') }}
-
-    - name: 2nd test
+    - uses: actions/download-artifact@v3
+      name: Download APKs and bundles
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: softprops/action-gh-release@v1
+      name: Release APKs and bundles
+      if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      with:
+        files: |
+          ./bundle-release
+          ./APK-release
+
+
+  Cleanup:
+    needs: [Build, Release]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: call webhook to delete artifacts
+      env:
+        FOR_WEBHOOKS_SECRET: ${{ secrets.WEBHOOK_SECRET }}
       run: |
-        echo IT WORKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-#     - uses: actions/download-artifact@v3
-#       name: Download APKs and bundles
-#       if: startsWith(github.ref, 'refs/tags/')
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-#     - uses: softprops/action-gh-release@v1
-#       name: Release APKs and bundles
-#       if: startsWith(github.ref, 'refs/tags/')
-#       with:
-#         files: |
-#           ./bundle-release
-#           ./APK-release
-
-
-#   Cleanup:
-#     needs: [Build, Release]
-#     if: always()
-#     runs-on: ubuntu-latest
-
-#     steps:
-#     - name: call webhook to delete artifacts
-#       env:
-#         FOR_WEBHOOKS_SECRET: ${{ secrets.WEBHOOK_SECRET }}
-#       run: |
-#         echo "::add-mask::$FOR_WEBHOOKS_SECRET"
-#         curl --verbose --fail --show-error --location --request POST "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" --header "Authorization: token $FOR_WEBHOOKS_SECRET" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.everest-preview+json' --data-raw "{ \"event_type\": \"delete_all_artifacts\", \"client_payload\": {\"parent_runid\": \"$GITHUB_RUN_ID\", \"parent_repo\": \"$GITHUB_REPOSITORY\"} }"
+        echo "::add-mask::$FOR_WEBHOOKS_SECRET"
+        curl --verbose --fail --show-error --location --request POST "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" --header "Authorization: token $FOR_WEBHOOKS_SECRET" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.everest-preview+json' --data-raw "{ \"event_type\": \"delete_all_artifacts\", \"client_payload\": {\"parent_runid\": \"$GITHUB_RUN_ID\", \"parent_repo\": \"$GITHUB_REPOSITORY\"} }"
