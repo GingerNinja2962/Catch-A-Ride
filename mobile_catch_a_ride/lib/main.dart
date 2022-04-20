@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Catch a Ride',
       theme: ThemeData(
         primaryColor: Colors.blueAccent,
+        scaffoldBackgroundColor: Colors.grey
       ),
       home: const HomeView(),
       initialRoute: routes.homePageRoute,

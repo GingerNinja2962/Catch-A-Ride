@@ -133,7 +133,7 @@ class NavDrawer extends StatelessWidget {
     (route == routes.settingsPageRoute)
     ? { if (globals.settingsSelected != true) {
       globals.settingsSelected = true,
-      // Navigator.popAndPushNamed(context, routes.settingsPageRoute), // TODO MAKE settings page
+      Navigator.popAndPushNamed(context, routes.settingsPageRoute), // TODO MAKE settings page
     }} : globals.settingsSelected = false;
 
     (route == routes.homePageRoute)

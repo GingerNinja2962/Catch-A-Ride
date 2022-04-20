@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:mobile_catch_a_ride/views/globals.dart' as globals;
 
-import 'package:mobile_catch_a_ride/models/camera/gesture_detector.dart';
+import 'package:mobile_catch_a_ride/models/camera/gesture_detector_model.dart';
 import 'package:mobile_catch_a_ride/models/camera/camera_model.dart';
 import 'package:mobile_catch_a_ride/models/directions/directions_repo.dart';
 

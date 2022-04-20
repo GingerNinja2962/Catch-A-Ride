@@ -1,11 +1,11 @@
-package WeThinkCode.co.za.RouteHandler;
+package WeThinkCode.co.za.AccessHandler;
 
 import io.javalin.Javalin;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
-public class routeHandler {
+public class accessHandler {
 //<editor-fold desc="======[ PUBLIC FUNCTIONS ]=======">
 
     public Javalin route(Javalin server) {

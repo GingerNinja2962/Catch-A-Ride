@@ -1,6 +1,6 @@
 package WeThinkCode.co.za;
 
-import WeThinkCode.co.za.RouteHandler.routeHandler;
+import WeThinkCode.co.za.AccessHandler.accessHandler;
 import io.javalin.Javalin;
 
 public class CatchARideServer {
@@ -11,7 +11,7 @@ public class CatchARideServer {
 
     public static void main(String[] args) {
         theServer = Javalin.create();
-        new routeHandler().route(theServer).start(serverPort);
+        new accessHandler().route(theServer).start(serverPort);
     }
 
 //</editor-fold>
